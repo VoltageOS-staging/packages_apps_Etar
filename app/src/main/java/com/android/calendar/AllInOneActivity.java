@@ -723,10 +723,21 @@ public class AllInOneActivity extends AbstractCalendarActivity implements EventH
      * The files are of the format *.ics and *.vcs
      */
     private void cleanupCachedEventFiles() {
-        if (!isExternalStorageWritable()) return;
+        if (!isExternalStorageWritable()) {
+            return;
+        }
+
         File cacheDir = getExternalCacheDir();
+        if (cacheDir == null || !cacheDir.exists()) {
+            return;
+        }
+
         File[] files = cacheDir.listFiles();
-        if (files == null) return;
+
+        if (files == null) {
+            return;
+        }
+
         for (File file : files) {
             String filename = file.getName();
             if (filename.endsWith(".ics") || filename.endsWith(".vcs")) {
